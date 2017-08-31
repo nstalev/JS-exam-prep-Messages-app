@@ -1,15 +1,95 @@
 $(()=>{
-
      //Attach Event Handlers
      (()=>{
         $('header').find('a[data-target]').click(navigateTo);
 
+         $('#formRegister').submit(registerUser);
+         $('#formLogin').submit(loginUser);
+         $('#linkMenuLogout').click(logOutUser);
+
+        $('#linkUserHomeMyMessages').click(()=>{
+            showView('MyMessages')
+
+        });
+         $('#linkUserHomeSendMessage').click(()=>{
+             showView('SendMessage')
+
+         });
+         $('#linkUserHomeArchiveSent').click(()=>{
+             showView('Archive')
+
+         });
+
+
     })();
+
+     function registerUser(ev) {
+         ev.preventDefault();
+
+         let registerUsername = $('#registerUsername');
+         let registerPasswd = $('#registerPasswd');
+         let registerName = $('#registerName');
+
+         let username = registerUsername.val();
+         let password = registerPasswd.val();
+         let name = registerName.val();
+
+         auth.register(username, password, name)
+             .then((userInfo)=>{
+                 registerUsername.val('');
+                 registerPasswd.val();
+                 registerName.val();
+                 saveSession(userInfo);
+                 showInfo('User registration successful');
+                 showView('UserHome');
+
+             })
+
+     }
+
+
+    function loginUser(ev) {
+        ev.preventDefault();
+        let loginUsername = $('#loginUsername');
+        let loginPasswd = $('#loginPasswd');
+
+        let username = loginUsername.val();
+        let password =  loginPasswd.val();
+
+        auth.login(username, password)
+            .then((userInfo) =>{
+            loginUsername.val('');
+            loginPasswd.val('');
+            saveSession(userInfo);
+            showInfo('User login successful');
+            showView('UserHome');
+            })
+
+    }
+
+
+    function logOutUser() {
+        auth.logout()
+            .then(() =>{
+                sessionStorage.clear();
+                showInfo('LogOut successful');
+                userLoggedOut();
+            })
+            .catch(handleError)
+    }
+
+
 
     function navigateTo() {
         let dataTarget = $(this).attr('data-target');
 
         showView(dataTarget);
+    }
+
+    if(sessionStorage.getItem('authtoken') === null){
+        userLoggedOut();
+    }else{
+        userLoggedIn();
     }
 
 
@@ -21,12 +101,17 @@ $(()=>{
     
     
     function userLoggedIn() {
+        $('.anonymous').hide();
+        $('.useronly').show();
         let username = sessionStorage.getItem('username');
-        $('#spanMenuLoggedInUser').text(username);
+        $('#spanMenuLoggedInUser').text(`Welcome, ${username}`);
+        $('#viewUserHomeHeading').text(`Welcome, ${username}`);
         showView('UserHome');
     }
 
     function userLoggedOut() {
+        $('.anonymous').show();
+        $('.useronly').hide();
         $('#spanMenuLoggedInUser').text('');
         showView('AppHome');
     }

@@ -1,10 +1,9 @@
 let auth = (() => {
     // user/login
-    function login(username, password, name) {
+    function login(username, password) {
         let userData = {
             username,
-            password,
-            name
+            password
         };
 
         return requester.post('user', 'login', 'basic', userData);

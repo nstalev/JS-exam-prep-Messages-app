@@ -5,31 +5,36 @@
     <meta charset="utf-8" />
     <title>Messages</title>
     <link rel="stylesheet" type="text/css" href="messages.css" />
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/models/auth.js"></script>
+    <script src="./scripts/models/requester.js"></script>
+
 </head>
 
 <body>
 
 <div id="app">
     <header id="menu">
-        <a href="#" class="anonymous" id="linkMenuAppHome">Home</a>
-        <a href="#" class="anonymous" id="linkMenuLogin">Login</a>
-        <a href="#" class="anonymous" id="linkMenuRegister">Register</a>
+        <a href="#" class="anonymous" id="linkMenuAppHome" data-target="AppHome">Home</a>
+        <a href="#" class="anonymous" id="linkMenuLogin" data-target="Login">Login</a>
+        <a href="#" class="anonymous" id="linkMenuRegister" data-target="Register">Register</a>
 
-        <a href="#" class="useronly" id="linkMenuUserHome">Home</a>
-        <a href="#" class="useronly" id="linkMenuMyMessages">My Messages</a>
-        <a href="#" class="useronly" id="linkMenuArchiveSent">Archive (Sent)</a>
-        <a href="#" class="useronly" id="linkMenuSendMessage">Send Message</a>
+        <a href="#" class="useronly" id="linkMenuUserHome" data-target="UserHome">Home</a>
+        <a href="#" class="useronly" id="linkMenuMyMessages" data-target="MyMessages">My Messages</a>
+        <a href="#" class="useronly" id="linkMenuArchiveSent" data-target="Archive">Archive (Sent)</a>
+        <a href="#" class="useronly" id="linkMenuSendMessage" data-target="SendMessage">Send Message</a>
         <a href="#" class="useronly" id="linkMenuLogout">Logout</a>
 
         <span class="useronly" id="spanMenuLoggedInUser">Welcome, {user}!</span>
     </header>
 
     <main>
-        <div id="loadingBox">Loading ...</div>
+        <div id="loadingBox" style="display: none">Loading ...</div>
 
-        <div id="infoBox">Info</div>
+        <div id="infoBox" style="display: none">Info</div>
 
-        <div id="errorBox">Error</div>
+        <div id="errorBox" style="display: none">Error</div>
 
         <section id="viewAppHome">
             <h1>Welcome</h1>
