@@ -82,7 +82,7 @@ $(()=>{
 
     function navigateTo() {
         let dataTarget = $(this).attr('data-target');
-
+        console.log(dataTarget);
         showView(dataTarget);
     }
 
